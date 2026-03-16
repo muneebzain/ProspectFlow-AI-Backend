@@ -1,51 +1,6 @@
-# Virtual environments
-.venv/
 venv/
-env/
-
-# Python cache
+.venv/
 __pycache__/
-*.py[cod]
-*$py.class
-
-# Build / packaging
-build/
-dist/
-*.egg-info/
-.eggs/
-
-# Environment files
+*.pyc
 .env
-.env.*
-!.env.example
-
-# IDE / editor
-.vscode/
-.idea/
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
-
-# Testing / coverage
-.pytest_cache/
-.coverage
-coverage.xml
-htmlcov/
-
-# Type checker / linter caches
-.mypy_cache/
-.ruff_cache/
-.pyre/
-
-# Jupyter
-.ipynb_checkpoints/
-
-# SQLite
-*.sqlite3
-
-# uv
-.uv/
+firebase-service-account.json
