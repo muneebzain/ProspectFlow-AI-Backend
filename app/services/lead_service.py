@@ -8,9 +8,10 @@ class LeadService:
         self.collection = self.db.collection("leads")
 
     def create_lead(self, data: dict):
+        now = datetime.now(timezone.utc)
         doc_ref = self.collection.document()
 
-        payload = {"id": doc_ref.id, **data, "created_at": datetime.now(timezone.utc)}
+        payload = {"id": doc_ref.id, **data, "created_at": now, "updated_at": now}
 
         doc_ref.set(payload)
         return payload
@@ -46,7 +47,10 @@ class LeadService:
 
     def update_lead(self, lead_id: str, data: dict):
         doc_ref = self.collection.document(lead_id)
-        doc_ref.update(data)
+
+        payload = {**data, "updated_at": datetime.now(timezone.utc)}
+
+        doc_ref.update(payload)
 
         updated_doc = doc_ref.get()
         updated_data = updated_doc.to_dict()
