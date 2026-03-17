@@ -1,12 +1,13 @@
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class Settings:
-    FIREBASE_CREDENTIALS_PATH: str = os.getenv("FIREBASE_CREDENTIALS_PATH", "")
-    FIRESTORE_DATABASE_ID: str = os.getenv("FIRESTORE_DATABASE_ID", "(default)")
+class Settings(BaseSettings):
+    FIREBASE_CREDENTIALS_PATH: str = "firebase-service-account.json"
+    FIRESTORE_DATABASE_ID: str = "(default)"
+    GEMINI_API_KEY: str
+    GEMINI_MODEL: str = "gemini-3-flash-preview"
+
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
 
 settings = Settings()

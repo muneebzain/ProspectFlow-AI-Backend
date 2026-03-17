@@ -8,12 +8,12 @@ class CampaignService:
         self.collection = self.db.collection("campaigns")
 
     def create_campaign(self, data: dict):
-        payload = {**data, "created_at": datetime.now(timezone.utc)}
-
         doc_ref = self.collection.document()
-        doc_ref.set(payload)
 
-        return {"id": doc_ref.id, **payload}
+        payload = {"id": doc_ref.id, **data, "created_at": datetime.now(timezone.utc)}
+
+        doc_ref.set(payload)
+        return payload
 
     def list_campaigns(self):
         docs = self.collection.stream()
@@ -21,7 +21,8 @@ class CampaignService:
 
         for doc in docs:
             item = doc.to_dict()
-            item["id"] = doc.id
+            if "id" not in item:
+                item["id"] = doc.id
             results.append(item)
 
         return results

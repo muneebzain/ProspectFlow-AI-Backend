@@ -1,9 +1,11 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, HTTPException
 from app.models.lead import LeadCreate
 from app.services.lead_service import LeadService
+from app.services.lead_scoring import LeadScoringService
 
 router = APIRouter(prefix="/leads", tags=["Leads"])
 lead_service = LeadService()
+lead_scoring_service = LeadScoringService()
 
 
 @router.post("/")
@@ -14,3 +16,27 @@ def create_lead(payload: LeadCreate):
 @router.get("/")
 def list_leads(campaign_id: str | None = Query(default=None)):
     return lead_service.list_leads(campaign_id=campaign_id)
+
+
+@router.post("/{lead_id}/score")
+def score_lead(lead_id: str):
+    lead = lead_service.get_lead_by_id(lead_id)
+
+    if not lead:
+        raise HTTPException(status_code=404, detail="Lead not found")
+
+    score_result = lead_scoring_service.score_lead(lead)
+
+    updated_lead = lead_service.update_lead(
+        lead_id,
+        {
+            "score": score_result["score"],
+            "fit": score_result["fit"],
+            "reason": score_result["reason"],
+            "pain_points": score_result["pain_points"],
+            "outreach_angle": score_result["outreach_angle"],
+            "status": "qualified" if score_result["score"] >= 70 else "review",
+        },
+    )
+
+    return updated_lead

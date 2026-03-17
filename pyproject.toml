@@ -14,4 +14,6 @@ dependencies = [
     "python-multipart",
     "httpx",
     "beautifulsoup4",
+        "google-genai",
+
 ]
