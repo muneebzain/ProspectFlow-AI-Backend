@@ -9,8 +9,9 @@ class CampaignService:
 
     def create_campaign(self, data: dict):
         doc_ref = self.collection.document()
+        now = datetime.now(timezone.utc)
 
-        payload = {"id": doc_ref.id, **data, "created_at": datetime.now(timezone.utc)}
+        payload = {"id": doc_ref.id, **data, "created_at": now, "updated_at": now}
 
         doc_ref.set(payload)
         return payload
@@ -26,3 +27,15 @@ class CampaignService:
             results.append(item)
 
         return results
+
+    def get_campaign_by_id(self, campaign_id: str):
+        doc_ref = self.collection.document(campaign_id)
+        doc = doc_ref.get()
+
+        if not doc.exists:
+            return None
+
+        data = doc.to_dict()
+        if "id" not in data:
+            data["id"] = doc.id
+        return data

@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from firebase_admin import firestore
 from app.core.firebase import get_firestore_client
 
 
@@ -57,3 +58,22 @@ class LeadService:
         if "id" not in updated_data:
             updated_data["id"] = updated_doc.id
         return updated_data
+
+    def cleanup_old_outreach_fields(self, lead_id: str):
+        doc_ref = self.collection.document(lead_id)
+        doc_ref.update(
+            {
+                "outreach_channel": firestore.DELETE_FIELD,
+                "outreach_tone": firestore.DELETE_FIELD,
+                "email_subject": firestore.DELETE_FIELD,
+                "email_message": firestore.DELETE_FIELD,
+                "email_follow_up_1": firestore.DELETE_FIELD,
+                "email_follow_up_2": firestore.DELETE_FIELD,
+                "linkedin_message": firestore.DELETE_FIELD,
+                "linkedin_follow_up_1": firestore.DELETE_FIELD,
+                "linkedin_follow_up_2": firestore.DELETE_FIELD,
+                "short_message": firestore.DELETE_FIELD,
+                "medium_message": firestore.DELETE_FIELD,
+                "updated_at": datetime.now(timezone.utc),
+            }
+        )
