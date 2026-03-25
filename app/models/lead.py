@@ -30,6 +30,17 @@ class OutreachData(BaseModel):
     error: Optional[str] = None
 
 
+class WorkflowData(BaseModel):
+    stage: Optional[str] = "new"
+    outreach_approved: Optional[bool] = False
+    sent_status: Optional[str] = "not_sent"
+    reply_status: Optional[str] = "no_reply"
+    next_follow_up_at: Optional[datetime] = None
+    last_contacted_at: Optional[datetime] = None
+    last_replied_at: Optional[datetime] = None
+    notes: Optional[str] = None
+
+
 class LeadCreate(BaseModel):
     campaign_id: str
     full_name: str
@@ -67,6 +78,7 @@ class LeadResponse(BaseModel):
     enriched_pain_points: Optional[List[str]] = None
 
     outreach: Optional[OutreachData] = None
+    workflow: Optional[WorkflowData] = None
 
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None

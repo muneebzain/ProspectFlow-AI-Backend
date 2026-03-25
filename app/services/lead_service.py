@@ -12,7 +12,22 @@ class LeadService:
         now = datetime.now(timezone.utc)
         doc_ref = self.collection.document()
 
-        payload = {"id": doc_ref.id, **data, "created_at": now, "updated_at": now}
+        payload = {
+            "id": doc_ref.id,
+            **data,
+            "workflow": {
+                "stage": "new",
+                "outreach_approved": False,
+                "sent_status": "not_sent",
+                "reply_status": "no_reply",
+                "next_follow_up_at": None,
+                "last_contacted_at": None,
+                "last_replied_at": None,
+                "notes": None,
+            },
+            "created_at": now,
+            "updated_at": now,
+        }
 
         doc_ref.set(payload)
         return payload
