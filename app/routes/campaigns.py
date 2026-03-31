@@ -17,6 +17,11 @@ def list_campaigns():
     return campaign_service.list_campaigns()
 
 
+@router.get("/dashboard/summary")
+def get_dashboard_summary():
+    return campaign_service.get_dashboard_summary()
+
+
 @router.get("/{campaign_id}")
 def get_campaign(campaign_id: str):
     campaign = campaign_service.get_campaign_by_id(campaign_id)

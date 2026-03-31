@@ -41,6 +41,17 @@ class WorkflowData(BaseModel):
     notes: Optional[str] = None
 
 
+class ReplyAnalysis(BaseModel):
+    reply_text: Optional[str] = None
+    classification: Optional[str] = None
+    sentiment: Optional[str] = None
+    reason: Optional[str] = None
+    next_action: Optional[str] = None
+    suggested_response: Optional[str] = None
+    analyzed_at: Optional[datetime] = None
+    error: Optional[str] = None
+
+
 class LeadCreate(BaseModel):
     campaign_id: str
     full_name: str
@@ -79,6 +90,7 @@ class LeadResponse(BaseModel):
 
     outreach: Optional[OutreachData] = None
     workflow: Optional[WorkflowData] = None
+    reply_analysis: Optional[ReplyAnalysis] = None
 
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
