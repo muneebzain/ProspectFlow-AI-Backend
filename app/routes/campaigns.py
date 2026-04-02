@@ -1,5 +1,6 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from app.models.campaign import CampaignCreate
+from app.models.template import CampaignTemplateCreate
 from app.services.campaign_service import CampaignService
 
 router = APIRouter(prefix="/campaigns", tags=["Campaigns"])
@@ -13,13 +14,23 @@ def create_campaign(payload: CampaignCreate):
 
 
 @router.get("/")
-def list_campaigns():
-    return campaign_service.list_campaigns()
+def list_campaigns(user_id: str | None = Query(default=None)):
+    return campaign_service.list_campaigns(user_id=user_id)
 
 
 @router.get("/dashboard/summary")
-def get_dashboard_summary():
-    return campaign_service.get_dashboard_summary()
+def get_dashboard_summary(user_id: str | None = Query(default=None)):
+    return campaign_service.get_dashboard_summary(user_id=user_id)
+
+
+@router.post("/templates")
+def create_template(payload: CampaignTemplateCreate):
+    return campaign_service.create_template(payload.model_dump())
+
+
+@router.get("/templates")
+def list_templates(user_id: str | None = Query(default=None)):
+    return campaign_service.list_templates(user_id=user_id)
 
 
 @router.get("/{campaign_id}")

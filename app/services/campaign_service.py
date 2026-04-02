@@ -7,6 +7,7 @@ class CampaignService:
         self.db = get_firestore_client()
         self.collection = self.db.collection("campaigns")
         self.leads_collection = self.db.collection("leads")
+        self.templates_collection = self.db.collection("campaign_templates")
 
     def create_campaign(self, data: dict):
         doc_ref = self.collection.document()
@@ -17,8 +18,13 @@ class CampaignService:
         doc_ref.set(payload)
         return payload
 
-    def list_campaigns(self):
-        docs = self.collection.stream()
+    def list_campaigns(self, user_id: str | None = None):
+        query = self.collection
+
+        if user_id:
+            query = query.where("user_id", "==", user_id)
+
+        docs = query.stream()
         results = []
 
         for doc in docs:
@@ -166,8 +172,8 @@ class CampaignService:
             "channel_performance": channel_performance,
         }
 
-    def get_dashboard_summary(self):
-        campaigns = self.list_campaigns()
+    def get_dashboard_summary(self, user_id: str | None = None):
+        campaigns = self.list_campaigns(user_id=user_id)
 
         total_campaigns = len(campaigns)
         total_leads = 0
@@ -239,3 +245,29 @@ class CampaignService:
             },
             "campaigns": campaign_breakdown,
         }
+
+    def create_template(self, data: dict):
+        doc_ref = self.templates_collection.document()
+        now = datetime.now(timezone.utc)
+
+        payload = {"id": doc_ref.id, **data, "created_at": now, "updated_at": now}
+
+        doc_ref.set(payload)
+        return payload
+
+    def list_templates(self, user_id: str | None = None):
+        query = self.templates_collection
+
+        if user_id:
+            query = query.where("user_id", "==", user_id)
+
+        docs = query.stream()
+        results = []
+
+        for doc in docs:
+            item = doc.to_dict()
+            if "id" not in item:
+                item["id"] = doc.id
+            results.append(item)
+
+        return results

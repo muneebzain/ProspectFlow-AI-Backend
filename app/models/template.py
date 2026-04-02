@@ -3,20 +3,22 @@ from typing import Optional
 from datetime import datetime
 
 
-class CampaignCreate(BaseModel):
+class CampaignTemplateCreate(BaseModel):
     user_id: str
     name: str
     niche: str
     offer: str
-    status: str = "draft"
+    default_channel: Optional[str] = "multi"
+    default_tone: Optional[str] = "professional"
 
 
-class CampaignResponse(BaseModel):
+class CampaignTemplateResponse(BaseModel):
     id: str
     user_id: str
     name: str
     niche: str
     offer: str
-    status: str
+    default_channel: Optional[str] = "multi"
+    default_tone: Optional[str] = "professional"
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
