@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+firebase-admin
+pydantic
+pydantic-settings
+python-dotenv
+httpx
+beautifulsoup4
+google-genai
