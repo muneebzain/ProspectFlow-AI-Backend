@@ -1,32 +1,25 @@
-ProspectFlow AI
-
+# ProspectFlow AI
 ProspectFlow AI is an AI-powered lead qualification and outreach backend built with FastAPI, Firestore, and Gemini.
-
 It helps businesses organize campaigns, enrich and score leads, generate personalized outreach, analyze replies, and track the full outbound workflow.
-
-Highlights
-
-* Campaign and lead management
-* Website-based lead enrichment
-* AI lead scoring and qualification
-* Personalized outreach for email and LinkedIn
-* Workflow tracking from new to booked
-* Reply analysis and suggested next action
-* Campaign analytics and dashboard summaries
-* User ownership and reusable campaign templates
-
-Tech Stack
-
-* Python
-* FastAPI
-* Firebase / Firestore
-* Gemini API
-* HTTPX
-* BeautifulSoup
-* Pydantic
-
-Project Structure
-
+## Features
+- Campaign and lead management
+- Website-based lead enrichment
+- AI lead scoring and qualification
+- Personalized outreach for email and LinkedIn
+- Workflow tracking from new to booked
+- Reply analysis and suggested next action
+- Campaign analytics and dashboard summaries
+- User ownership and reusable campaign templates
+## Tech Stack
+- Python
+- FastAPI
+- Firebase / Firestore
+- Gemini API
+- HTTPX
+- BeautifulSoup
+- Pydantic
+## Project Structure
+```bash
 prospectflow-ai/
 ├── app/
 │   ├── main.py
@@ -56,7 +49,7 @@ Core Features
 
 * Generate email outreach
 * Generate LinkedIn outreach
-* Generate short and medium variants
+* Generate short and medium message variants
 * Save outreach inside a structured nested object
 
 3. Workflow Tracking
@@ -68,7 +61,7 @@ Core Features
 4. Reply Intelligence
 
 * Analyze lead replies
-* Classify intent
+* Classify reply intent
 * Suggest next action
 * Draft a suggested response
 
@@ -112,7 +105,7 @@ pip install -r requirements.txt
 
 4. Add Firebase credentials
 
-Download your Firebase service account JSON and place it in the project root.
+Download your Firebase service account JSON and place it in the project root:
 
 firebase-service-account.json
 
@@ -201,15 +194,36 @@ Lead
   "status": "new"
 }
 
+Generate Outreach
+
+{
+  "channel": "multi",
+  "tone": "professional"
+}
+
+Analyze Reply
+
+{
+  "reply_text": "This looks interesting. Can you send pricing and a few examples?"
+}
+
+Firestore Collections
+
+The backend currently uses collections such as:
+
+* campaigns
+* leads
+* campaign_templates
+
 Security Notes
 
-Before making the repository public:
+Before making this repository public:
 
-* do not commit .env
-* do not commit firebase-service-account.json
-* do not commit real API keys
-* use .env.example instead of real secrets
-* rotate any secret that may already have been exposed
+* Do not commit .env
+* Do not commit firebase-service-account.json
+* Do not commit real API keys
+* Use .env.example instead of real secrets
+* Rotate any secret that may already have been exposed
 
 Current Status
 
@@ -217,21 +231,27 @@ ProspectFlow AI is backend-first and already supports:
 
 * AI qualification
 * AI outreach generation
-* reply intelligence
-* workflow tracking
-* campaign analytics
-* templates
-* per-user ownership
+* Reply intelligence
+* Workflow tracking
+* Campaign analytics
+* Templates
+* Per-user ownership
 
 Recommended next steps:
 
 * Firebase Auth
-* frontend dashboard
-* email sending integration
+* Frontend dashboard
+* Email sending integration
 * LinkedIn sending integration
 * Stripe billing
-* audit logs
+* Audit logs
 
 License
 
 Add your preferred license here.
+
+Example:
+
+MIT License
+
+If you want, I can also give you a more polished GitHub version with badges, a quick-start section, and a demo section.
