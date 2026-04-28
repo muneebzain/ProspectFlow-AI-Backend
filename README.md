@@ -2,28 +2,23 @@ ProspectFlow AI
 
 ProspectFlow AI is an AI-powered lead qualification and outreach backend built with FastAPI, Firestore, and Gemini.
 
-It helps businesses organize campaigns, store leads, enrich company data from websites, score lead quality, generate personalized outreach, analyze replies, and track the full outreach workflow.
+It helps businesses organize campaigns, enrich and score leads, generate personalized outreach, analyze replies, and track the full outbound workflow.
 
-What ProspectFlow AI does
+Highlights
 
-ProspectFlow AI is designed to support a real outbound sales workflow.
-
-It can:
-
-* create and manage campaigns
-* create and manage leads
-* enrich leads using website data
-* score leads with AI
-* generate outreach messages for email and LinkedIn
-* track workflow stages such as approved, sent, replied, and booked
-* analyze lead replies
-* provide campaign analytics and dashboard summaries
-* support templates and per-user ownership
+* Campaign and lead management
+* Website-based lead enrichment
+* AI lead scoring and qualification
+* Personalized outreach for email and LinkedIn
+* Workflow tracking from new to booked
+* Reply analysis and suggested next action
+* Campaign analytics and dashboard summaries
+* User ownership and reusable campaign templates
 
 Tech Stack
 
-* FastAPI
 * Python
+* FastAPI
 * Firebase / Firestore
 * Gemini API
 * HTTPX
@@ -48,62 +43,51 @@ prospectflow-ai/
 ├── .env.example
 └── README.md
 
-Main Features by Phase
+Core Features
 
-Phase 1: Foundation
+1. Lead Qualification
 
-* FastAPI backend setup
-* Firestore connection
-* campaigns CRUD
-* leads CRUD
+* Store leads under campaigns
+* Enrich leads from website data
+* Score lead quality with AI
+* Save fit, reasoning, pain points, and outreach angle
 
-Phase 2: Lead Scoring
+2. Outreach Generation
 
-* AI lead scoring
-* fit classification
-* reasoning and pain points
-* outreach angle generation
+* Generate email outreach
+* Generate LinkedIn outreach
+* Generate short and medium variants
+* Save outreach inside a structured nested object
 
-Phase 3: Lead Enrichment
+3. Workflow Tracking
 
-* website fetch and parsing
-* company summary generation
-* inferred niche
-* enriched pain points
+* Track stages such as new, scored, outreach_generated, approved, sent, replied, booked, and closed
+* Store notes and follow-up state
+* Track sent and replied timestamps
 
-Phase 4: Outreach Generation
+4. Reply Intelligence
 
-* email outreach generation
-* LinkedIn outreach generation
-* short and medium message variants
-* nested outreach object storage
+* Analyze lead replies
+* Classify intent
+* Suggest next action
+* Draft a suggested response
 
-Phase 5: Workflow and Analytics
+5. Analytics
 
-* workflow tracking
-* campaign analytics
-* dashboard summary
-* approval, sent, replied, and booked states
+* Campaign-level analytics
+* Dashboard summary across campaigns
+* Reply breakdowns
+* Tone and channel performance
 
-Phase 6: Reply Intelligence and Optimization
+6. Product-Ready Structure
 
-* reply classification
-* suggested response generation
-* reply breakdown analytics
-* tone and channel performance
-
-Phase 7: Productization
-
-* user ownership
-* campaign templates
-* per-user filtering
-* dashboard-ready SaaS structure
+* Per-user ownership
+* Campaign templates
+* User-based filtering for leads and campaigns
 
 Environment Variables
 
-Create a .env file locally based on .env.example.
-
-Example:
+Create a local .env file based on .env.example.
 
 FIREBASE_CREDENTIALS_PATH=firebase-service-account.json
 FIRESTORE_DATABASE_ID=(default)
@@ -130,23 +114,21 @@ pip install -r requirements.txt
 
 Download your Firebase service account JSON and place it in the project root.
 
-Example file name:
-
 firebase-service-account.json
 
 5. Create .env
 
-Use the .env.example file as reference and add your real values.
+Use .env.example as reference and add your real values.
 
 6. Run the backend
 
 uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
-7. Open Swagger docs
+7. Open API docs
 
 http://127.0.0.1:8000/docs
 
-Cloud Run Deployment
+Deployment
 
 ProspectFlow AI is designed to be deployed on Google Cloud Run.
 
@@ -156,9 +138,7 @@ Recommended architecture:
 * Database: Firestore
 * Future frontend: Firebase Hosting or App Hosting
 
-Deployment files
-
-Make sure these files exist in the project root:
+Required Root Files
 
 * requirements.txt
 * Procfile
@@ -175,7 +155,7 @@ __pycache__
 .env
 firebase-service-account.json
 
-Deploy command
+Cloud Run Deploy Command
 
 gcloud run deploy prospectflow-ai \
   --source . \
@@ -184,32 +164,13 @@ gcloud run deploy prospectflow-ai \
   --set-env-vars FIRESTORE_DATABASE_ID="(default)",GEMINI_MODEL="gemini-2.5-flash" \
   --set-secrets GEMINI_API_KEY=GEMINI_API_KEY:latest
 
-Core API Areas
-
-ProspectFlow AI currently includes APIs for:
-
-* campaigns
-* leads
-* enrichment
-* scoring
-* outreach generation
-* workflow updates
-* reply analysis
-* campaign analytics
-* dashboard summary
-* templates
-
-Swagger docs provide the easiest way to test the full API locally or after deployment.
-
 Example Flow
 
-A simple end-to-end test flow looks like this:
-
 1. Create a campaign
-2. Create a lead under that campaign
+2. Create a lead
 3. Enrich and score the lead
 4. Generate outreach
-5. Mark outreach as approved and sent
+5. Approve and send outreach
 6. Analyze a reply
 7. View campaign analytics
 8. View dashboard summary
@@ -240,46 +201,37 @@ Lead
   "status": "new"
 }
 
-Generate Outreach
-
-{
-  "channel": "multi",
-  "tone": "professional"
-}
-
-Analyze Reply
-
-{
-  "reply_text": "This looks interesting. Can you send pricing and a few examples?"
-}
-
-Firestore Collections
-
-The backend currently uses collections such as:
-
-* campaigns
-* leads
-* campaign_templates
-
 Security Notes
 
-Before making this repository public:
+Before making the repository public:
 
 * do not commit .env
 * do not commit firebase-service-account.json
 * do not commit real API keys
 * use .env.example instead of real secrets
-* rotate any key that may already have been exposed
+* rotate any secret that may already have been exposed
 
 Current Status
 
-ProspectFlow AI is a backend-first system that is structured like a real SaaS product.
-
-It already supports:
+ProspectFlow AI is backend-first and already supports:
 
 * AI qualification
 * AI outreach generation
 * reply intelligence
+* workflow tracking
 * campaign analytics
-* user ownership
 * templates
+* per-user ownership
+
+Recommended next steps:
+
+* Firebase Auth
+* frontend dashboard
+* email sending integration
+* LinkedIn sending integration
+* Stripe billing
+* audit logs
+
+License
+
+Add your preferred license here.
