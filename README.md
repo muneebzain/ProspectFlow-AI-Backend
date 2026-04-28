@@ -245,13 +245,3 @@ Recommended next steps:
 * LinkedIn sending integration
 * Stripe billing
 * Audit logs
-
-License
-
-Add your preferred license here.
-
-Example:
-
-MIT License
-
-If you want, I can also give you a more polished GitHub version with badges, a quick-start section, and a demo section.
